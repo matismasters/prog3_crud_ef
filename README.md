@@ -2,14 +2,13 @@
 
 Proyecto de la **Unidad 7** de Programación 3 (2026). Es el **mismo CRUD de
 `animales`** que [`prog3_crud_ado`](https://github.com/matismasters/prog3_crud_ado),
-con la misma UI, el mismo `Animal`, el mismo `AnimalFormDto` y el mismo
-`AnimalesController`... pero ahora la persistencia la maneja **Entity Framework
-Core** en vez de ADO.NET a mano.
+con la misma UI, el mismo `Animal` y el mismo `AnimalFormDto`... pero ahora la
+persistencia la maneja **Entity Framework Core** en vez de ADO.NET a mano.
 
-La gracia es comparar los dos proyectos lado a lado: lo único que cambia es
-**cómo se guardan los datos**, y ahí se ve todo lo que EF te saca de encima.
+La gracia es comparar los dos proyectos lado a lado: cambia **cómo se guardan
+los datos**, y ahí se ve todo lo que EF te saca de encima.
 
-## Qué resuelve EF (los tres "dolores" de crud_ado)
+## Qué resuelve EF
 
 1. **El mapeo fila ↔ objeto desaparece.** En crud_ado había un `MapearAnimal`
    que copiaba columna por columna. Acá EF mapea solo, a partir de la
@@ -19,13 +18,24 @@ La gracia es comparar los dos proyectos lado a lado: lo único que cambia es
    `dotnet ef migrations add`, queda versionado en la carpeta `Migrations/` y se
    aplica solo al arrancar (`context.Database.Migrate()`). Hasta el seed de
    datos viaja dentro de la migración (`HasData`).
-3. **El boilerplate se evapora.** Compará `Repositories/AnimalRepository.cs` con
-   el de crud_ado: mismos métodos públicos, pero cada uno es una o dos líneas
-   (`ToList`, `Find`, `Add` + `SaveChanges`, `Update`, `Remove`). No hay
-   conexión, ni comando, ni parámetros uno por uno.
+3. **El boilerplate se evapora.** Las operaciones del CRUD pasan a ser una o dos
+   líneas (`ToList`, `Find`, `Add` + `SaveChanges`, `Remove`). No hay conexión,
+   ni comando, ni parámetros uno por uno.
 
-EF **no hace nada que no se pueda hacer a mano**: hace lo mismo,
-automáticamente y sin que nos equivoquemos.
+## La diferencia más grande: no hay repositorio
+
+`crud_ado` tiene un `AnimalRepository` que existe para **esconder la danza de
+ADO.NET** (abrir conexión, comando, parámetros, mapear filas). En `crud_ef`
+**ese repositorio no existe, y no hace falta**: el `DbContext` de EF **ya es** un
+repositorio + una unidad de trabajo.
+
+- `DbSet<Animal>` (la propiedad `Animales`) es el repositorio: te da `Add`,
+  `Remove`, `Find` y consultas (`Where`, `OrderBy`, `ToList`).
+- `SaveChanges()` es la unidad de trabajo: confirma todos los cambios juntos en
+  una transacción.
+
+Por eso el `AnimalesController` de `crud_ef` recibe el `SafariContext`
+directamente y le habla a él. EF no achicó la capa de repositorio: la **eliminó**.
 
 ## Cómo correrlo
 
@@ -57,8 +67,7 @@ dotnet ef database update
 |---|---|---|
 | Entidad | `Models/Animal.cs` | La clase tipada (idéntica a crud_ado). |
 | DTO | `Models/AnimalFormDto.cs` | Datos del formulario, con validación (idéntico). |
-| DbContext | `Data/SafariContext.cs` | La sesión con la base; mapea `Animal` ↔ tabla y siembra datos. |
-| Repositorio | `Repositories/AnimalRepository.cs` | Mismos métodos que crud_ado, implementados con EF. |
-| Controller | `Controllers/AnimalesController.cs` | Acciones MVC (idéntico a crud_ado). |
+| DbContext | `Data/SafariContext.cs` | La sesión con la base; ES el repositorio + unidad de trabajo. |
+| Controller | `Controllers/AnimalesController.cs` | Acciones MVC; habla directo con el DbContext. |
 | Vistas | `Views/Animales/*.cshtml` | Index, Details, Create, Edit, Delete (idénticas). |
 | Migraciones | `Migrations/*` | El schema versionado, generado por EF. |

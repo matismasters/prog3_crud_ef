@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using CrudEf.Data;
-using CrudEf.Repositories;
 
 // El template arranca con 'var'; en el curso escribimos tipos explicitos.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// Registramos el DbContext de EF apuntando a SQLite, y el repositorio que lo usa.
+// Registramos el DbContext de EF apuntando a SQLite. No registramos ningun
+// repositorio: el DbContext ya es el repositorio, y el controller lo usa directo.
 string? cs = builder.Configuration.GetConnectionString("Animales");
 builder.Services.AddDbContext<SafariContext>(opciones => opciones.UseSqlite(cs));
-builder.Services.AddScoped<AnimalRepository>();
 
 WebApplication app = builder.Build();
 
