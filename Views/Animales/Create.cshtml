@@ -1,0 +1,41 @@
+@model AnimalFormDto
+@{
+    ViewData["Title"] = "Nuevo animal";
+}
+
+<h1>Nuevo animal</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Especie" class="form-label"></label>
+        <input asp-for="Especie" class="form-control" />
+        <span asp-validation-for="Especie" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Sexo" class="form-label">Sexo (M o H)</label>
+        <input asp-for="Sexo" class="form-control" maxlength="1" />
+        <span asp-validation-for="Sexo" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Reserva" class="form-label"></label>
+        <input asp-for="Reserva" class="form-control" />
+        <span asp-validation-for="Reserva" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Energia" class="form-label"></label>
+        <input asp-for="Energia" class="form-control" type="number" />
+        <span asp-validation-for="Energia" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

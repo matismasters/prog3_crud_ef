@@ -1,0 +1,49 @@
+@model List<Animal>
+@{
+    ViewData["Title"] = "Animales";
+}
+
+<h1>Animales</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Nuevo animal</a>
+</p>
+
+@if (Model.Count == 0)
+{
+    <p>No hay animales cargados todavia.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Especie</th>
+                <th>Sexo</th>
+                <th>Reserva</th>
+                <th>Energia</th>
+                <th>Fecha alta</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Animal animal in Model)
+            {
+                <tr>
+                    <td>@animal.Id</td>
+                    <td>@animal.Especie</td>
+                    <td>@animal.Sexo</td>
+                    <td>@animal.Reserva</td>
+                    <td>@animal.Energia</td>
+                    <td>@animal.FechaAlta.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@animal.Id">Ver</a> |
+                        <a asp-action="Edit" asp-route-id="@animal.Id">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@animal.Id">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

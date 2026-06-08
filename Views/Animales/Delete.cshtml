@@ -1,0 +1,27 @@
+@model Animal
+@{
+    ViewData["Title"] = "Borrar animal";
+}
+
+<h1>Borrar animal #@Model.Id</h1>
+
+<p class="text-danger">Estas seguro de que queres borrar este animal?</p>
+
+<dl class="row">
+    <dt class="col-sm-2">Especie</dt>
+    <dd class="col-sm-10">@Model.Especie</dd>
+
+    <dt class="col-sm-2">Sexo</dt>
+    <dd class="col-sm-10">@Model.Sexo</dd>
+
+    <dt class="col-sm-2">Reserva</dt>
+    <dd class="col-sm-10">@Model.Reserva</dd>
+
+    <dt class="col-sm-2">Energia</dt>
+    <dd class="col-sm-10">@Model.Energia</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">Si, borrar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

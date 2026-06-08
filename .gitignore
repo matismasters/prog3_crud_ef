@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+
+# SQLite database files (se generan solos al correr la app via migraciones)
+*.db
+*.db-shm
+*.db-wal
+
+# IDE / editor
+.vs/
+.vscode/
+*.user
+
+# OS
+.DS_Store
