@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudEf.Migrations
 {
     [DbContext(typeof(SafariContext))]
-    [Migration("20260608201749_InitialCreate")]
+    [Migration("20260609220939_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,37 +24,31 @@ namespace CrudEf.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Energia")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("energia");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Especie")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("especie");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("FechaAlta")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasColumnName("fecha_alta")
                         .HasDefaultValueSql("datetime('now')");
 
                     b.Property<string>("Reserva")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("reserva");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Sexo")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("sexo");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("animales", (string)null);
+                    b.ToTable("Animales");
 
                     b.HasData(
                         new

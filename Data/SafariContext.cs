@@ -15,24 +15,23 @@ namespace CrudEf.Data
 
         public DbSet<Animal> Animales { get; set; }
 
-        // Aca le decimos a EF como se llama la tabla y las columnas, para que el
-        // schema generado por las migraciones coincida con el del proyecto a
-        // mano. Tambien sembramos los datos de ejemplo: el seed viaja DENTRO de
-        // la migracion, asi que la base nace poblada y versionada.
+        // EF mapea las propiedades de Animal a columnas POR CONVENCION: con solo
+        // declarar el DbSet de arriba ya tenemos tabla 'Animales' con columnas
+        // Id, Especie, Sexo, Reserva, Energia y FechaAlta. No hace falta listar
+        // las propiedades una por una.
+        //
+        // Aca abajo queda SOLO lo que EF no puede deducir solo (las tres cosas
+        // que no tienen equivalente como data annotation en el modelo):
+        //   1. Sexo es un 'char': le pedimos que lo guarde como texto ('M'/'H').
+        //   2. FechaAlta arranca con el valor por defecto de la base.
+        //   3. El seed de ejemplo, que viaja DENTRO de la migracion.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Animal>(animal =>
             {
-                animal.ToTable("animales");
-
-                animal.Property(a => a.Id).HasColumnName("id");
-                animal.Property(a => a.Especie).HasColumnName("especie").IsRequired();
-                animal.Property(a => a.Sexo).HasColumnName("sexo").HasConversion<string>().IsRequired();
-                animal.Property(a => a.Reserva).HasColumnName("reserva").IsRequired();
-                animal.Property(a => a.Energia).HasColumnName("energia").IsRequired();
+                animal.Property(a => a.Sexo).HasConversion<string>();
 
                 animal.Property(a => a.FechaAlta)
-                      .HasColumnName("fecha_alta")
                       .HasDefaultValueSql("datetime('now')");
 
                 animal.HasData(

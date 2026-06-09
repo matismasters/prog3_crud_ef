@@ -14,25 +14,25 @@ namespace CrudEf.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "animales",
+                name: "Animales",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    especie = table.Column<string>(type: "TEXT", nullable: false),
-                    sexo = table.Column<string>(type: "TEXT", nullable: false),
-                    reserva = table.Column<string>(type: "TEXT", nullable: false),
-                    energia = table.Column<int>(type: "INTEGER", nullable: false),
-                    fecha_alta = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime('now')")
+                    Especie = table.Column<string>(type: "TEXT", nullable: false),
+                    Sexo = table.Column<string>(type: "TEXT", nullable: false),
+                    Reserva = table.Column<string>(type: "TEXT", nullable: false),
+                    Energia = table.Column<int>(type: "INTEGER", nullable: false),
+                    FechaAlta = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "datetime('now')")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_animales", x => x.id);
+                    table.PrimaryKey("PK_Animales", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "animales",
-                columns: new[] { "id", "energia", "especie", "fecha_alta", "reserva", "sexo" },
+                table: "Animales",
+                columns: new[] { "Id", "Energia", "Especie", "FechaAlta", "Reserva", "Sexo" },
                 values: new object[,]
                 {
                     { 1, 80, "leon", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "serengeti", "M" },
@@ -46,7 +46,7 @@ namespace CrudEf.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "animales");
+                name: "Animales");
         }
     }
 }
