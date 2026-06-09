@@ -100,7 +100,7 @@ namespace CrudEf.Controllers
             // Patron idiomatico de EF: cargar la entidad, modificar lo que
             // cambio, y guardar. EF rastrea el objeto (change tracking) y en el
             // UPDATE toca SOLO las columnas que realmente cambiaron; la
-            // fecha_alta original queda intacta porque no la tocamos.
+            // FechaAlta original queda intacta porque no la tocamos.
             Animal? animal = _context.Animales.Find(id);
             if (animal == null)
             {
