@@ -12,5 +12,7 @@ namespace CrudEf.Models
         public string Reserva { get; set; } = "";
         public int Energia { get; set; }
         public DateTime FechaAlta { get; set; }
+        public bool EstaVivo { get; set; }
+        public DateTime FechaMuerte { get; set; }
     }
 }

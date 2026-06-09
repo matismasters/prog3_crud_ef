@@ -24,6 +24,8 @@ else
                 <th>Reserva</th>
                 <th>Energia</th>
                 <th>Fecha alta</th>
+                <th>Esta vivo</th>
+                <th>Fecha muerte</th>
                 <th></th>
             </tr>
         </thead>
@@ -37,6 +39,10 @@ else
                     <td>@animal.Reserva</td>
                     <td>@animal.Energia</td>
                     <td>@animal.FechaAlta.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@animal.EstaVivo</td>
+                    <td>
+                        @animal.FechaMuerte.ToString("yyyy-MM-dd HH:mm")
+                    </td>
                     <td>
                         <a asp-action="Details" asp-route-id="@animal.Id">Ver</a> |
                         <a asp-action="Edit" asp-route-id="@animal.Id">Editar</a> |
